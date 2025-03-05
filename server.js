@@ -14,9 +14,9 @@ app.post('/add-book', (req, res) => {
 
     if (validateBook(req.body.bookName, req.body.isbn, req.body.author, req.body.yearPublished)) {
         appendFileSync('books.txt', req.body.bookName + ',' + req.body.isbn + ',' + req.body.author + ',' + req.body.yearPublished + "\n");
-        res.send({ succes: true });
+        res.send({ success: true });
     } else {
-        res.send({ succes: false });
+        res.send({ success: false });
     }
 });
 
