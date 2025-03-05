@@ -2,7 +2,7 @@ import needle from "needle";
 
 needle.post(
     'http://localhost:3000/add-book',
-    { bookName: "Harry Potter and the Philosopher's Stone", isbn: "966-0-7475-3269-9", author: "J.K. Rowling", yearPublished: "1997" },
+    { bookName: "Harry Potter and the Philosopher's Stone", isbn: "966-0-7475-3269-9", author: "J.K Rowling", yearPublished: "1997" },
     (err, res) => {
         console.log(res.body);
     }
@@ -10,7 +10,7 @@ needle.post(
 
 needle.post(
     'http://localhost:3000/add-book',
-    { bookName: "Harry Potter and the Chamber of Secrets", isbn: "0-7475- 3849-2", author: "J.K. Rowling", yearPublished: "1998" },
+    { bookName: "Harry Potter and the Chamber of Secrets", isbn: "0-7475- 3849-2", author: "J.K Rowling", yearPublished: "1998" },
     (err, res) => {
         console.log(res.body);
     }

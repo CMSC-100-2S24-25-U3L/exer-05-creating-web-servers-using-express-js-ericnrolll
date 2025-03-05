@@ -42,28 +42,21 @@ app.get('/find-by-author', (req, res) => {
     var books = readFileSync("books.txt", { encoding: 'utf8', flag: 'r' }).split("\n"); // stores books into an object
     var authorExists = false; 
     var searchedBooks = [];
-    var n = 0;
-
-    console.log(req.query.author);
 
     for (let i=0; i<books.length; i++) {
         if (books[i].search(req.query.author) != -1) {
-            console.log(req.query.author);
-            searchedBooks[n] = books[i];
+            searchedBooks.push(books[i])
             authorExists = true;
-            n++;
         } 
     };
 
     if (authorExists) {
-        // var output = "";
-        // for (let i=0; i<n; i++){
-        //     output = output + searchedBooks[i] + "\n";
-        // }
+        var output = "";
+        for (let i=0; i<searchedBooks.length; i++){
+            output = "<p>" + output + searchedBooks[i] + "</p>";
+        }
 
-        // res.send(output);
-
-        res.send(searchedBooks)
+        res.send(output);
 
     } else {
         res.send("Author does not exist.");
