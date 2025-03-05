@@ -1,5 +1,5 @@
 import express from "express";
-import { appendFileSync }  from 'fs';
+import { appendFileSync, readFileSync } from 'fs';
 
 
 // instantiate the server
@@ -20,6 +20,57 @@ app.post('/add-book', (req, res) => {
     }
 });
 
+// get method for searching isbn and author
+app.get('/find-by-isbn-author', (req, res) => {
+    var books = readFileSync("books.txt", { encoding: 'utf8', flag: 'r' }).split("\n"); // stores books into an object
+    var bookExists = false; 
+
+    for (let i=0; i<books.length; i++) {
+        if (books[i].search(req.query.isbn + "," + req.query.author) != -1) {
+            res.send(books[i])
+            bookExists = true;
+        } 
+    };
+
+    if(!bookExists) {
+        res.send("Book does not exist.");
+    };
+})
+
+// get method for searching author
+app.get('/find-by-author', (req, res) => {
+    var books = readFileSync("books.txt", { encoding: 'utf8', flag: 'r' }).split("\n"); // stores books into an object
+    var authorExists = false; 
+    var searchedBooks = [];
+    var n = 0;
+
+    console.log(req.query.author);
+
+    for (let i=0; i<books.length; i++) {
+        if (books[i].search(req.query.author) != -1) {
+            console.log(req.query.author);
+            searchedBooks[n] = books[i];
+            authorExists = true;
+            n++;
+        } 
+    };
+
+    if (authorExists) {
+        // var output = "";
+        // for (let i=0; i<n; i++){
+        //     output = output + searchedBooks[i] + "\n";
+        // }
+
+        // res.send(output);
+
+        res.send(searchedBooks)
+
+    } else {
+        res.send("Author does not exist.");
+    }
+})
+
+// supporting validate function
 function validateBook(bookName, isbn, author, yearPublished) {
     // check if fields are existing
     if (bookName == undefined || isbn == undefined || author == undefined || yearPublished == undefined) {
